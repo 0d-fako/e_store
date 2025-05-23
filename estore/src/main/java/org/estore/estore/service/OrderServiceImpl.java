@@ -3,6 +3,7 @@ package org.estore.estore.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.estore.estore.dto.request.CreateOrderRequest;
+import org.estore.estore.dto.request.ItemRequest;
 import org.estore.estore.dto.response.CreateOrderResponse;
 import org.estore.estore.exception.ItemOutOfStockException;
 import org.estore.estore.model.Item;
@@ -23,13 +24,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CreateOrderResponse create(CreateOrderRequest order) {
-        //1. check to see that the items are in-stock
-        order.getItems().forEach((item) -> {
-            Item foundItem = itemService.getItemBy(item.getId());
-            Product product = productService.getProductBy(foundItem.getProductId());
-            if (item.getQuantity() > product.getQuantity())
-                throw new ItemOutOfStockException("item out of stock");
-        });
+        order.getItems().forEach(this::checkAvailabilityOf);
         //2a. if all items are in stock, create order
         Order customerOrder = new Order(order);
         log.info("order: {}", customerOrder);
@@ -40,5 +35,12 @@ public class OrderServiceImpl implements OrderService {
         orderResponse.setOrderId(customerOrder.getId());
         orderResponse.setMessage("Order placed Successfully");
         return orderResponse;
+    }
+
+    private void checkAvailabilityOf(ItemRequest item) {
+        Item foundItem = itemService.getItemBy(item.getId());
+        Product product = productService.getProductBy(foundItem.getProductId());
+        if (item.getQuantity() > product.getQuantity())
+            throw new ItemOutOfStockException("item out of stock");
     }
 }
