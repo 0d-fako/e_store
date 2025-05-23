@@ -25,11 +25,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public CreateOrderResponse create(CreateOrderRequest order) {
         order.getItems().forEach(this::checkAvailabilityOf);
-        //2a. if all items are in stock, create order
-        Order customerOrder = new Order(order);
-        log.info("order: {}", customerOrder);
-        customerOrder = orderRepository.save(customerOrder);
+        return buildCreateOrderResponseFrom(orderRepository.save(new Order(order)));
+    }
 
+    private static CreateOrderResponse buildCreateOrderResponseFrom(Order customerOrder) {
         var orderResponse =  new CreateOrderResponse();
         orderResponse.setOrderStatus("IN_PROGRESS");
         orderResponse.setOrderId(customerOrder.getId());
