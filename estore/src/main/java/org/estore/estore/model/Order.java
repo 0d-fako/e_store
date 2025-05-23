@@ -2,6 +2,7 @@ package org.estore.estore.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.estore.estore.dto.request.CreateOrderRequest;
@@ -11,6 +12,7 @@ import org.estore.estore.dto.request.CreateOrderRequest;
 @Setter
 @Table(name = "orders")
 @ToString
+@NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
