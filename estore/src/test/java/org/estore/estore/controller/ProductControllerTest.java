@@ -31,7 +31,8 @@ public class ProductControllerTest {
         buildFormFields();
 
         mockMvc.perform(multipart("/api/v1/product/")
-                        .part(new MockPart("image", ), new MockPart("video", ))
+                        .file("image", )
+                        .file("video", )
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 .formFields(buildFormFields())
         ).andExpect(status().is2xxSuccessful())
