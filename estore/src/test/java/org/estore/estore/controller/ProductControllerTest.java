@@ -1,17 +1,20 @@
 package org.estore.estore.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockPart;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -21,31 +24,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ProductControllerTest {
 
-
     @Autowired
     private MockMvc mockMvc;
-    ObjectMapper mapper = new ObjectMapper();
 
     @Test
     public void testCanAddProduct() throws Exception {
-        buildFormFields();
-
-        mockMvc.perform(multipart("/api/v1/product/")
-                        .file("image", )
-                        .file("video", )
+        String imagePath = "C:\\Users\\semicolon\\Downloads\\estore\\estore\\src\\test\\resources\\assets\\iphone.jpg";
+        String videoPath = "C:\\Users\\semicolon\\Downloads\\estore\\estore\\src\\test\\resources\\assets\\iphone 16 video.mp4";
+        Path image = Paths.get(imagePath);
+        Path video = Paths.get(videoPath);
+        mockMvc.perform(multipart("/api/v1/product")
+                        .file("media", new MockMultipartFile("image", Files.newInputStream(image)).getBytes())
+                        .file("media",  new MockMultipartFile("video", Files.newInputStream(video)).getBytes())
+                        .params(buildFormFields())
+                        .with(request->{request.setMethod(HttpMethod.PUT.name());
+                                return request;
+                                })
                         .contentType(MediaType.MULTIPART_FORM_DATA)
-                .formFields(buildFormFields())
-        ).andExpect(status().is2xxSuccessful())
+                ).andExpect(status().is2xxSuccessful())
                 .andDo(print());
     }
 
-    private static MultiValueMap<String, String> buildFormFields() {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("name", "iPhone");
-        params.add("price", BigDecimal.valueOf(1000).toString());
-        params.add("description", "Iphone 16 Pro Max");
-        params.add("quantity", "10");
-        return params;
+    private static MultiValueMap<String, String>  buildFormFields() {
+        MultiValueMap<String, String> fields = new LinkedMultiValueMap<>();
+        fields.add("name", "iphone");
+        fields.add("price", BigDecimal.valueOf(1000).toString());
+        fields.add("description", "iphone 16 pro max");
+        fields.add("quantity", "10");
+
+        return fields;
     }
 
 }
