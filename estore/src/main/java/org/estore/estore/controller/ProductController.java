@@ -1,4 +1,4 @@
-package org.estore.estore.controllers;
+package org.estore.estore.controller;
 
 import org.estore.estore.dto.request.AddProductRequest;
 import org.estore.estore.dto.response.AddProductResponse;
