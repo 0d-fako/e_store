@@ -29,8 +29,8 @@ public class ProductControllerTest {
 
     @Test
     public void testCanAddProduct() throws Exception {
-        String imagePath = "C:\\Users\\semicolon\\Downloads\\estore\\estore\\src\\test\\resources\\assets\\iphone.jpg";
-        String videoPath = "C:\\Users\\semicolon\\Downloads\\estore\\estore\\src\\test\\resources\\assets\\iphone 16 video.mp4";
+        String imagePath = "C:\\Users\\Dell\\Desktop\\PROJECTS\\estore\\estore\\src\\main\\resources\\assets\\iphone.jpg";
+        String videoPath = "C:\\Users\\Dell\\Desktop\\PROJECTS\\estore\\estore\\src\\main\\resources\\assets\\iphone 16 video.mp4";
         Path image = Paths.get(imagePath);
         Path video = Paths.get(videoPath);
         mockMvc.perform(multipart("/api/v1/product")
