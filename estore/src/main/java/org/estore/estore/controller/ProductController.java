@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
-@RequestMapping("/ap/v1/product")
+@RequestMapping("/api/v1/product")
 public class ProductController {
 
     private final ProductService productService;
