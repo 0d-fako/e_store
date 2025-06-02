@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class WalrusServiceTest {
     @Autowired
@@ -26,7 +28,9 @@ public class WalrusServiceTest {
         try(var inputStream = Files.newInputStream(path)) {
             MultipartFile file = new MockMultipartFile("image", inputStream);
             String data = walrusService.upload(file);
-            assert
+            assertThat(data).isNotNull();
+            assertThat(data).isNotEmpty();
+
         }catch (IOException exception){
             exception.printStackTrace();
         }
