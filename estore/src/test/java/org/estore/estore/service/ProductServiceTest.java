@@ -1,6 +1,7 @@
 package org.estore.estore.service;
 
 import org.estore.estore.dto.request.AddProductRequest;
+import org.estore.estore.dto.request.UpdateProductRequest;
 import org.estore.estore.dto.response.AddProductResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class ProductServiceTest {
 
     }
 
-
+    @Test
+    public void testCanUpdateProduct() {
+        UpdateProductRequest updateProductRequest = new UpdateProductRequest();
+        updateProductRequest.setName("Updated Name");
+    }
 
 }
