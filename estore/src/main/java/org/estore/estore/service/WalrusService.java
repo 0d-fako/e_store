@@ -22,7 +22,7 @@ public class WalrusService {
         RequestEntity<MultipartFile> requestEntity = new RequestEntity<>(file, headers, HttpMethod.PUT, URI.create(walrusUrl));
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("epochs", 5);
-        params.put("send_object_to", )
+        params.put("send_object_to", );
 
         RestTemplate restTemplate = new RestTemplate();
         var response = restTemplate.exchange(walrusUrl, HttpMethod.PUT, requestEntity, WalrusService.class);
