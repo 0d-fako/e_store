@@ -24,10 +24,16 @@ public class WalrusService {
         params.put("send_object_to", "0x7a26fe751dbdc0f43e63a51712738241ef7f91e6e9a8a256a958ebd3d565b27e");
 
         Resource resource = file.getResource();
+        HttpEntity<?> httpEntity = new HttpEntity(resource, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<WalrusUploadResponse> response = restTemplate.exchange(URI.create(walrusUrl), HttpMethod.PUT, requestEntity, WalrusUploadResponse.class);
         WalrusUploadResponse walrusUploadResponse = response.getBody();
+        boolean isFIleAlreadyExists = false;
+
+        if (walrusUploadResponse != null) {
+            return walrusUploadResponse.getBlobObject().getBlodId;
+        }
         return walrusUploadResponse.getNewlyCreated().getBlobObject().getBlodId;
     }
 }
