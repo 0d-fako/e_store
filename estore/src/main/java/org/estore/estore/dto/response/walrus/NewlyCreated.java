@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class NewlyCreated {
     private BlobObject blobObject;
+    private int cost;
 
 
 }

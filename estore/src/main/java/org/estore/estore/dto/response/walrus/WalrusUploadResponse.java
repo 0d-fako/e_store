@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class WalrusUploadResponse {
     private NewlyCreated newlyCreated;
+    private AlreadyCertified alreadyCertified;
 }

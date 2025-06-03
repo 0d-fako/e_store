@@ -29,9 +29,9 @@ public class WalrusService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<WalrusUploadResponse> response = restTemplate.exchange(URI.create(walrusUrl), HttpMethod.PUT, requestEntity, WalrusUploadResponse.class);
         WalrusUploadResponse walrusUploadResponse = response.getBody();
-        boolean isFIleAlreadyExists = false;
+        boolean isFileAlreadyExists = walrusUploadResponse != null && walrusUploadResponse.get
 
-        if (walrusUploadResponse != null) {
+        if (isFileAlreadyExists) {
             return walrusUploadResponse.getBlobObject().getBlodId;
         }
         return walrusUploadResponse.getNewlyCreated().getBlobObject().getBlodId;
