@@ -5,8 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NewlyCreated {
-    private BlobObject blobObject;
-
-
+public class BlobObject {
+    public String getBlodId;
 }

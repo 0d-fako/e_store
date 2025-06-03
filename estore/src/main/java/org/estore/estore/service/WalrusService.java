@@ -1,13 +1,12 @@
 package org.estore.estore.service;
 
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
+import org.estore.estore.dto.response.walrus.WalrusUploadResponse;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
-import org.springframework.http.HttpHeaders;
+import org.springframework.core.io.Resource;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -20,12 +19,15 @@ public class WalrusService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         RequestEntity<MultipartFile> requestEntity = new RequestEntity<>(file, headers, HttpMethod.PUT, URI.create(walrusUrl));
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("epochs", 5);
-        params.put("send_object_to", );
+        params.put("send_object_to", "0x7a26fe751dbdc0f43e63a51712738241ef7f91e6e9a8a256a958ebd3d565b27e");
+
+        Resource resource = file.getResource();
 
         RestTemplate restTemplate = new RestTemplate();
-        var response = restTemplate.exchange(walrusUrl, HttpMethod.PUT, requestEntity, WalrusService.class);
-        return "";
+        ResponseEntity<WalrusUploadResponse> response = restTemplate.exchange(URI.create(walrusUrl), HttpMethod.PUT, requestEntity, WalrusUploadResponse.class);
+        WalrusUploadResponse walrusUploadResponse = response.getBody();
+        return walrusUploadResponse.getNewlyCreated().getBlobObject().getBlodId;
     }
 }
