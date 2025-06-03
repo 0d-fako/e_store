@@ -34,7 +34,7 @@ public class TestUtils {
             var videoStream = Files.newInputStream(video)) {
 
             AddProductRequest productRequest = new AddProductRequest();
-            productRequest.setName("Iphone 17");
+            productRequest.setName("iphone 17");
             productRequest.setMedia(
                     List.of(
                             new MockMultipartFile("media", imageStream),

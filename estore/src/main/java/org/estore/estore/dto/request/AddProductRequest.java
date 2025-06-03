@@ -10,9 +10,9 @@ import java.util.List;
 @Setter
 @Getter
 public class AddProductRequest {
-    private  String name;
+    private String name;
     private BigDecimal price;
-    private  long quantity;
+    private long quantity;
     private String description;
     private List<MultipartFile> media;
 

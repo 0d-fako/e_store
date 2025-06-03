@@ -43,6 +43,9 @@ public class WalrusService {
     }
 
     public byte[] getFileBy(String blobId) {
-
+        String walrusAggregatorUrl= "https://aggregator.walrus-testnet.walrus.space/v1/blobs";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(walrusAggregatorUrl.concat(blobId), byte[].class);
+        return response.getBody();
     }
 }
