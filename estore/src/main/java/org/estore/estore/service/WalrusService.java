@@ -39,6 +39,6 @@ public class WalrusService {
             return walrusUploadResponse.getAlreadyCertified().getBlobId();
         }
         assert walrusUploadResponse != null;
-        return walrusUploadResponse.getNewlyCreated().getBlobObject().getBlodId;
+        return walrusUploadResponse.getNewlyCreated().getBlobObject().getBlobId();
     }
 }

@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BlobObject {
-    public String getBlodId;
+    public String blobId;
 }

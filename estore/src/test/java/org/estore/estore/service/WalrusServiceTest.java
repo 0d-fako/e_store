@@ -40,4 +40,12 @@ public class WalrusServiceTest {
         }
     }
 
+
+    @Test
+    void testCanGetFile(){
+        String blobId = "J9cXuJjM3O71evQWejrzLCeSqYEjqDLErCLeAtHuL3I";
+
+
+    }
+
 }
