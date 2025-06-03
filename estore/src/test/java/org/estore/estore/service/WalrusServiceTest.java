@@ -44,6 +44,10 @@ public class WalrusServiceTest {
     @Test
     void testCanGetFile(){
         String blobId = "J9cXuJjM3O71evQWejrzLCeSqYEjqDLErCLeAtHuL3I";
+        byte[] fileContent = walrusService.getFileBy(blobId);
+        log.info("data: {}", fileContent);
+        assertThat(fileContent).isNotNull();
+        assertThat(fileContent).isNotEmpty();
 
 
 

@@ -41,4 +41,8 @@ public class WalrusService {
         assert walrusUploadResponse != null;
         return walrusUploadResponse.getNewlyCreated().getBlobObject().getBlobId();
     }
+
+    public byte[] getFileBy(String blobId) {
+
+    }
 }
