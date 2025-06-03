@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final WalrusService walrusService;
     @Override
     public Product getProductBy(String id) {
         return productRepository.findById(id)
@@ -23,6 +24,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public AddProductResponse add(AddProductRequest productRequest) {
         Product product = modelMapper.map(productRequest, Product.class);
+        productRequest.getMedia().forEach((media) -> {
+            String blobId  = walrusService.upload(media);
+            String url = "localhost:8080/products/media" + blobId;
+            product.getMedia().add(blobId);
+        });
         Product savedProduct = productRepository.save(product);
         return modelMapper.map(savedProduct, AddProductResponse.class);
     }

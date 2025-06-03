@@ -23,7 +23,7 @@ public class Product {
     @CollectionTable(name = "media",
             joinColumns = @JoinColumn(name = "media_id",
                     referencedColumnName = "id"))
-    private Set<String> image;
+    private Set<String> media;
     private String category;
     private Long quantity;
     private LocalDateTime createdAt;
