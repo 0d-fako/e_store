@@ -4,6 +4,7 @@ package org.estore.estore.utils;
 import org.estore.estore.dto.request.AddProductRequest;
 import org.estore.estore.dto.request.CreateOrderRequest;
 import org.estore.estore.dto.request.ItemRequest;
+import org.estore.estore.dto.request.UpdateOrderRequest;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
@@ -47,5 +48,21 @@ public class TestUtils {
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static UpdateOrderRequest buildUpdateOrderRequest(String orderId) {
+        UpdateOrderRequest request = new UpdateOrderRequest();
+        request.setOrderId(orderId);
+        request.setOrderStatus("COMPLETED");
+        request.setNotes("Updated order notes");
+        return request;
+    }
+
+    public static CreateOrderRequest buildCreateOrderWithCartId(String cartId) {
+        CreateOrderRequest order = new CreateOrderRequest();
+        order.setItems(List.of(new ItemRequest("26943268-c87b-4d41-af5e-2cc83a6d2bc8", 2),
+                new ItemRequest("1c7469de-63ec-4299-a160-3e03d3a2e3c8", 5)));
+        order.setCartId(cartId);
+        return order;
     }
 }
