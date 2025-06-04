@@ -29,4 +29,18 @@ public class OrderServiceTest {
                 .containsIgnoringCase("Order Placed Successfully");
 
     }
+
+    @Test
+    @Sql(scripts = {"/db/script.sql"})
+    public void testCanGetOrderById() {
+        CreateOrderResponse createResponse = orderService.create(buildCreateOrderRequest());
+        String orderId = createResponse.getOrderId();
+
+        GetOrderResponse getResponse = orderService.getById(orderId);
+
+        assertNotNull(getResponse);
+        assertThat(getResponse.getOrderId()).isEqualTo(orderId);
+        assertThat(getResponse.getOrderStatus()).isNotNull();
+        assertThat(getResponse.getItems()).isNotEmpty();
+    }
 }
