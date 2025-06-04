@@ -1,5 +1,6 @@
 package org.estore.estore.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.estore.estore.dto.response.walrus.WalrusUploadResponse;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
@@ -9,12 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.HttpMethod.PUT;
 
 @Component
+@Slf4j
 public class WalrusService {
     public String upload(MultipartFile file) {
         String walrusUrl = "https://publisher.walrus-testnet.walrus.space/v1/blobs";
@@ -43,9 +46,33 @@ public class WalrusService {
     }
 
     public byte[] getFileBy(String blobId) {
-        String walrusAggregatorUrl= "https://aggregator.walrus-testnet.walrus.space/v1/blobs";
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<byte[]> response = restTemplate.getForEntity(walrusAggregatorUrl.concat(blobId), byte[].class);
-        return response.getBody();
+        String walrusAggregatorUrl = "https://aggregator.walrus-testnet.walrus.space/v1/blobs/";
+
+        try {
+            log.info("Downloading blob: {}", blobId);
+            log.info("URL: {}", walrusAggregatorUrl + blobId);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM, MediaType.ALL));
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<byte[]> response = restTemplate.exchange(
+                    walrusAggregatorUrl + blobId,
+                    HttpMethod.GET,
+                    entity,
+                    byte[].class
+            );
+
+            log.info("Response status: {}", response.getStatusCode());
+            log.info("Content length: {}", response.getBody() != null ? response.getBody().length : "null");
+
+            return response.getBody();
+
+        } catch (Exception e) {
+            log.error("Download failed: {}", e.getMessage(), e);
+            return null;
+        }
     }
 }
