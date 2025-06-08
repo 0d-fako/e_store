@@ -15,4 +15,5 @@ public class Item {
     @GeneratedValue(strategy= GenerationType.UUID)
     private String id;
     private String productId;
+    private int quantity;
 }

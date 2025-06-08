@@ -13,10 +13,10 @@ import java.util.List;
 
 public interface OrderService {
     CreateOrderResponse create(CreateOrderRequest order);
+
     GetOrderResponse getById(String orderId);
+
     UpdateOrderResponse update(UpdateOrderRequest updateRequest);
+
     DeleteOrderResponse deleteById(String orderId);
-    Page<GetOrderResponse> getAll(Pageable pageable);
-    List<GetOrderResponse> getByCartId(String cartId);
-    List<GetOrderResponse> getByStatus(String status);
-    }
+}
